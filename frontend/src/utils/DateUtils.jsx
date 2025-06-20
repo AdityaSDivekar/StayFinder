@@ -1,9 +1,9 @@
-import React from 'react'
+const formatDate = (date) => {
+  return new Date(date).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+};
 
-const DateUtils = () => {
-  return (
-    <div>DateUtils</div>
-  )
-}
-
-export default DateUtils
+export { formatDate };

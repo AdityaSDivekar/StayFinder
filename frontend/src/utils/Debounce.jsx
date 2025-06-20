@@ -1,9 +1,9 @@
-import React from 'react'
+const debounce = (func, delay) => {
+  let timeoutId;
+  return (...args) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func(...args), delay);
+  };
+};
 
-const Debounce = () => {
-  return (
-    <div>Debounce</div>
-  )
-}
-
-export default Debounce
+export { debounce };

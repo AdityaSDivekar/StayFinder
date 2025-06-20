@@ -1,9 +1,5 @@
-import React from 'react'
+const formatPrice = (price) => {
+  return `$${parseFloat(price).toFixed(2)}`;
+};
 
-const PriceUtils = () => {
-  return (
-    <div>PriceUtils</div>
-  )
-}
-
-export default PriceUtils
+export { formatPrice };
