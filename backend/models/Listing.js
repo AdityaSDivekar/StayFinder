@@ -49,11 +49,8 @@ ListingSchema.index({ host: 1 });
 // Compound index for common queries (e.g., sorting by price or date)
 ListingSchema.index({ pricePerNight: 1, createdAt: -1 });
 
-// Static method for finding listings by location
-ListingSchema.statics.findByLocation = async function (location) {
-  return await this.find({ $text: { $search: location } })
-    .populate('host', 'name')
-    .sort({ score: { $meta: 'textScore' } });
+ListingSchema.statics.findByLocation = function (location) {
+  return this.find({ location: { $regex: location, $options: 'i' } });
 };
 
 // Static method for finding listings by host

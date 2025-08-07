@@ -45,11 +45,17 @@ export const getProfile = async () => {
 
 // ========== LISTINGS ==========
 
-export const getAllListings = async (location = '') => {
-  const response = await api.get(`/listings${location ? `?location=${location}` : ''}`);
-  return response.data.data;
+export const getAllListings = async (location = '', page = 1, limit = 8) => {
+  try {
+    const response = await api.get('/listings', {
+      params: { location, page, limit },
+    });
+    return response.data.data;
+  } catch (error) {
+    console.error('API error:', error.response?.data || error.message);
+    throw new Error('Failed to fetch listings');
+  }
 };
-
 export const getListing = async (id) => {
   const response = await api.get(`/listings/${id}`);
   return response.data.data;

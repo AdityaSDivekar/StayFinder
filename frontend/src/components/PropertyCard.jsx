@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { formatPrice } from '../utils/PriceUtils';
 import placeholder from '../assets/placeholder.png'; // Your existing placeholder image
 import { FaMapMarkerAlt, FaDollarSign, FaStar } from 'react-icons/fa'; // Added icons
+import { useMemo } from 'react';
 
 const PropertyCard = ({ listing }) => {
   // Fallback for missing images or title
@@ -11,9 +12,13 @@ const PropertyCard = ({ listing }) => {
   const priceDisplay = listing.pricePerNight ? formatPrice(listing.pricePerNight) : 'Price on Request';
 
   // Optional: Simulate average rating for display if you plan to add ratings later
-  const averageRating = listing.averageRating || (Math.random() * (5 - 3) + 3).toFixed(1); // Placeholder rating
-  const reviewCount = listing.reviewCount || Math.floor(Math.random() * 200); // Placeholder review count
+  const averageRating = useMemo(() => {
+  return listing.averageRating ?? parseFloat((Math.random() * (5 - 3) + 3).toFixed(1));
+}, [listing.averageRating]);
 
+const reviewCount = useMemo(() => {
+  return listing.reviewCount ?? Math.floor(Math.random() * 200);
+}, [listing.reviewCount]);
   return (
     <Link
       to={`/listings/${listing._id}`}
