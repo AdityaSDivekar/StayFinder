@@ -9,8 +9,17 @@ const loginService = async ({ email, password }) => {
   }
 
   const user = await User.findByEmail(email);
-  if (!user || user.password !== password) {
+  if (!user) {
     throw new ErrorResponse('Invalid credentials', 401);
+  }
+
+  const isMatch = await user.matchPassword(password);
+  if (!isMatch) {
+    throw new ErrorResponse('Invalid credentials', 401);
+  }
+
+  if (!user.isEmailVerified) {
+    throw new ErrorResponse('Please verify your email to log in', 401);
   }
 
   const token = generateToken(user._id);

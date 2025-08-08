@@ -1,16 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
-router.use('/auth/register', require('./api/auth/register'));
-router.use('/auth/login', require('./api/auth/login'));
-router.use('/auth/me', require('./api/auth/me'));
-router.use('/listings', require('./api/listings/index'));
-router.use('/listings', require('./api/listings/single'));
-router.use('/listings/create', require('./api/listings/create'));
-router.use('/listings/update', require('./api/listings/update'));
-router.use('/listings/delete', require('./api/listings/delete'));
-router.use('/listings/my-listings', require('./api/listings/myListings'));
-router.use('/bookings/create', require('./api/bookings/create'));
-router.use('/bookings/user', require('./api/bookings/user'));
+const authRoutes = require('./api/auth');
+const listingRoutes = require('./api/listings');
+const bookingRoutes = require('./api/bookings');
+const userRoutes = require('./api/user');
+
+router.use('/api/auth', authRoutes);
+router.use('/api/listings', listingRoutes);
+router.use('/api/bookings', bookingRoutes);
+router.use('/api/user', userRoutes);
+
+const adminRoutes = require('./api/admin');
+router.use('/api/admin', adminRoutes);
 
 module.exports = router;
