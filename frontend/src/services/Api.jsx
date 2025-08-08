@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  // In development, this should be proxied by the Vite dev server.
+  // In production, this will be handled by the Vercel rewrite rules.
+  baseURL: '/api',
   timeout: 5000,
 });
 
@@ -33,8 +35,8 @@ export const login = async (email, password) => {
   return response.data.data;
 };
 
-export const register = async (name, email, password, isHost) => {
-  const response = await api.post('/auth/register', { name, email, password, isHost });
+export const register = async (name, email, password) => {
+  const response = await api.post('/auth/register', { name, email, password });
   return response.data.data;
 };
 
@@ -62,17 +64,17 @@ export const getListing = async (id) => {
 };
 
 export const createListing = async (listingData) => {
-  const response = await api.post('/listings/create', listingData);
+  const response = await api.post('/listings', listingData);
   return response.data.data;
 };
 
 export const updateListing = async (id, listingData) => {
-  const response = await api.put(`/listings/update/${id}`, listingData);
+  const response = await api.put(`/listings/${id}`, listingData);
   return response.data.data;
 };
 
 export const deleteListing = async (id) => {
-  const response = await api.delete(`/listings/delete/${id}`);
+  const response = await api.delete(`/listings/${id}`);
   return response.data.data;
 };
 
@@ -84,11 +86,17 @@ export const getMyListings = async () => {
 // ========== BOOKINGS ==========
 
 export const createBooking = async (bookingData) => {
-  const response = await api.post('/bookings/create', bookingData);
+  const response = await api.post('/bookings', bookingData);
   return response.data.data;
 };
 
 export const getUserBookings = async () => {
-  const response = await api.get('/bookings/user');
+  const response = await api.get('/bookings');
+  return response.data.data;
+};
+
+// ========== USER ==========
+export const applyToBecomeHost = async () => {
+  const response = await api.post('/user/apply-to-become-host');
   return response.data.data;
 };
